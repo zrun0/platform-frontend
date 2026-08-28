@@ -1,0 +1,67 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #001529;
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.nav a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: white;
+}
+
+.nav a.active {
+  color: white;
+  font-weight: 500;
+}
+
+.content {
+  flex: 1;
+  background-color: #f0f2f5;
+}
+
+.welcome {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 32px;
+  color: #001529;
+  margin-bottom: 16px;
+}
+
+.welcome p {
+  font-size: 16px;
+  color: #666;
+}
+
+.subappContainer {
+  min-height: calc(100vh - 64px);
+}

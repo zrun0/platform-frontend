@@ -1,0 +1,8 @@
+{
+  "enabledPlugins": {
+    "javascript-typescript@claude-code-workflows": true,
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "developer-essentials@claude-code-workflows": true,
+    "mattpocock-skills@claude-plugins-official": true
+  }
+}

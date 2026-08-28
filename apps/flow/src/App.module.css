@@ -1,0 +1,43 @@
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  color: #52c41a;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.info {
+  background-color: #f6ffed;
+  border-radius: 4px;
+  padding: 12px;
+  margin: 16px 0;
+}
+
+.info strong {
+  color: #52c41a;
+}
+
+.button {
+  background-color: #52c41a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button:hover {
+  background-color: #73d13d;
+}

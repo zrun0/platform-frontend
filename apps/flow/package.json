@@ -1,0 +1,26 @@
+{
+  "name": "flow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "echo 'Linting flow'",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "qiankun": "^2.10.16",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.2",
+    "vite-plugin-qiankun": "^1.0.15",
+    "zustand": "^5.0.15"
+  }
+}

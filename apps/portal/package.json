@@ -1,5 +1,5 @@
 {
-  "name": "main-base",
+  "name": "portal",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "echo 'Linting main-base'",
+    "lint": "echo 'Linting portal'",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

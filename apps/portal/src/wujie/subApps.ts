@@ -15,7 +15,7 @@ export const subApps: SubAppConfig[] = [
     routePrefix: '/uc',
     props: {
       testProp: 'hello from main',
-      mainBase: true,
+      fromPortal: true,
     },
   },
   {
@@ -25,7 +25,7 @@ export const subApps: SubAppConfig[] = [
     routePrefix: '/flow',
     props: {
       testProp: 'hello from main',
-      mainBase: true,
+      fromPortal: true,
     },
   },
 ];

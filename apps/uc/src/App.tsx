@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useUserStore } from './stores/userStore';
 import HomePage from './pages/HomePage';
 import styles from './App.module.css';
-import type { User } from 'shared-common';
+import type { User } from '@zrun/core';
 
 // App component for UC sub-app
 interface AppProps {
@@ -28,8 +28,12 @@ export default function App({ basename = '/' }: AppProps) {
         <p className={styles.subtitle}>User Center Sub-Application</p>
 
         <div className={styles.info}>
-          <p><strong>User:</strong> {user.name}</p>
-          <p><strong>Role:</strong> {user.role}</p>
+          <p>
+            <strong>User:</strong> {user.name}
+          </p>
+          <p>
+            <strong>Role:</strong> {user.role}
+          </p>
         </div>
 
         <button className={styles.button} onClick={handleUpdateUser}>

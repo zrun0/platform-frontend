@@ -13,8 +13,8 @@ pnpm dev:uc
 # 开发 Flow 子应用
 pnpm dev:flow
 
-# 开发 Main Base 主基座
-pnpm dev:base
+# 开发 Portal 主基座
+pnpm dev:portal
 ```
 
 **优势**:
@@ -28,7 +28,7 @@ pnpm dev:base
 开发完成后，使用全量启动验证集成：
 
 ```bash
-# 启动所有应用（main-base + uc + flow）
+# 启动所有应用（portal + uc + flow）
 pnpm dev
 ```
 
@@ -36,7 +36,7 @@ pnpm dev
 
 ```
 • Running dev in 4 packages
-main-base:dev:   ➜  Local:   http://localhost:8000/
+portal:dev:      ➜  Local:   http://localhost:8000/
 uc:dev:          ➜  Local:   http://localhost:8001/
 flow:dev:        ➜  Local:   http://localhost:8002/
 ```
@@ -74,14 +74,14 @@ pnpm dev
 
 ```bash
 # 1. 启动主基座
-pnpm dev:base
+pnpm dev:portal
 
 # 2. 修改代码
 
 # 3. 启动子应用进行集成测试
 # Terminal 1: pnpm dev:uc
 # Terminal 2: pnpm dev:flow
-# Terminal 3: pnpm dev:base
+# Terminal 3: pnpm dev:portal
 ```
 
 ### 场景 3: 添加新依赖
@@ -108,11 +108,11 @@ pnpm --filter <app-name> typecheck
 
 ## 应用端口映射
 
-| 应用      | 端口 | URL                   |
-| --------- | ---- | --------------------- |
-| Main Base | 8000 | http://localhost:8000 |
-| UC        | 8001 | http://localhost:8001 |
-| Flow      | 8002 | http://localhost:8002 |
+| 应用   | 端口 | URL                   |
+| ------ | ---- | --------------------- |
+| Portal | 8000 | http://localhost:8000 |
+| UC     | 8001 | http://localhost:8001 |
+| Flow   | 8002 | http://localhost:8002 |
 
 ---
 
@@ -246,7 +246,7 @@ declare module '*.module.css' {
 
 **解决方案**:
 
-1. 检查主基座 `apps/main-base/src/wujie/subApps.ts`，确认子应用配置包含 props 字段:
+1. 检查主基座 `apps/portal/src/wujie/subApps.ts`，确认子应用配置包含 props 字段:
 
 ```ts
 {
@@ -255,7 +255,7 @@ declare module '*.module.css' {
   routePrefix: '/uc',
   props: {
     testProp: 'hello from main',
-    mainBase: true,
+    fromPortal: true,
   },
 }
 ```
@@ -305,7 +305,7 @@ if (window.__POWERED_BY_WUJIE__) {
 pnpm dev              # 全量启动
 pnpm dev:uc           # UC 子应用
 pnpm dev:flow         # Flow 子应用
-pnpm dev:base         # Main Base 主基座
+pnpm dev:portal       # Portal 主基座
 
 # 构建相关
 pnpm build            # 构建所有应用

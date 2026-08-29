@@ -31,7 +31,11 @@ export default function App() {
                 e.preventDefault();
                 navigate(app.routePrefix);
               }}
-              className={location.pathname.startsWith(app.routePrefix) ? styles.active : ''}
+              className={
+                location.pathname.startsWith(app.routePrefix)
+                  ? styles.active
+                  : ''
+              }
             >
               {app.label}
             </a>

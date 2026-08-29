@@ -16,5 +16,6 @@ export const useWorkflowStore = create<WorkflowState>((set) => ({
     status: 'Active',
     steps: 3,
   },
-  updateWorkflow: (name, status, steps) => set({ workflow: { name, status, steps } }),
+  updateWorkflow: (name, status, steps) =>
+    set({ workflow: { name, status, steps } }),
 }));

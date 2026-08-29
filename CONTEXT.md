@@ -10,7 +10,7 @@
 - 关键特性：生命周期管理、预加载、保活（alive）、降级（degrade）、路由同步（sync）
 - 文档：https://wujie-micro.github.io/doc/
 
-**Main Base (main-base)**
+**Portal (portal)**
 
 - wujie 主基座应用，运行在 `localhost:8000`
 - 职责：注册子应用、路由导航、跨应用通信协调
@@ -19,18 +19,18 @@
 
 **Sub Application (子应用)**
 
-- 独立运行的前端应用，可被 main-base 加载或独立开发
+- 独立运行的前端应用，可被 portal 加载或独立开发
 - 入口注册 `window.__WUJIE_MOUNT / __WUJIE_UNMOUNT` 生命周期（wujie 模式），standalone 模式直接渲染
 - 当前子应用：
   - **UC (用户中心)**: `localhost:8001`, 路由前缀 `/uc`
   - **Flow (工作流管理)**: `localhost:8002`, 路由前缀 `/flow`
 
-**Shared Common (shared-common)**
+**Core (@zrun/core)**
 
-- 内部公共库，不独立构建，各 app 直接消费其 TS 源码
+- 核心共享包（packages 底座层），不独立构建，各 app 直接消费其 TS 源码
 - 内容：当前为空壳，随业务逐步添加类型定义和工具函数
-- 依赖方向：`apps/*` → `packages/*`（禁止反向依赖）
-- 约束：只放类型定义和纯函数，无业务逻辑、无副作用
+- 依赖方向：`apps/*` 及其他 `packages/*` → `core`（`core` 不依赖任何内部包，禁止反向依赖）
+- 约束：只放类型定义和纯函数，无业务逻辑、无副作用；带副作用的（请求、存储、事件）放独立包
 
 ### Technical Terms
 
@@ -43,12 +43,12 @@
 **wujie-react**
 
 - wujie 的 React 封装包，提供 `<WujieReact />` 组件（挂载子应用）与 `preloadApp`/`destroyApp` 等静态方法
-- 2.1.0 自带类型声明残缺，本仓库用 `apps/main-base/src/wujie/wujie-react.d.ts` + tsconfig `paths` 做类型重定向（仅影响类型检查）
+- 2.1.0 自带类型声明残缺，本仓库用 `apps/portal/src/wujie/wujie-react.d.ts` + tsconfig `paths` 做类型重定向（仅影响类型检查）
 
 **workspace:***
 
 - pnpm workspace 协议，用于 monorepo 内部包引用
-- 示例：`"shared-common": "workspace:*"`
+- 示例：`"@zrun/core": "workspace:*"`
 
 **routePrefix（路由前缀）**
 
@@ -117,7 +117,7 @@
 
 **Constraint**: 仅使用 wujie `props` 单向传参，禁止以下做法：
 
-- ❌ 在 shared-common 预埋全局状态
+- ❌ 在 core 预埋全局状态
 - ❌ 使用事件总线（`$wujie.bus`）跨应用通信
 - ❌ 通过 `window` 全局变量共享数据
 - ❌ 跨应用直接 import
@@ -125,7 +125,7 @@
 **Correct Pattern**:
 
 ```typescript
-// main-base 在 src/wujie/subApps.ts 中配置 props
+// portal 在 src/wujie/subApps.ts 中配置 props
 {
   name: 'uc',
   entry: '//localhost:8001',

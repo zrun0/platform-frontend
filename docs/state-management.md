@@ -16,7 +16,7 @@
 ```typescript
 // apps/uc/src/stores/userStore.ts
 import { create } from 'zustand';
-import type { User } from 'shared-common';
+import type { User } from '@zrun/core';
 
 interface UserState {
   user: User;
@@ -35,7 +35,7 @@ export const useUserStore = create<UserState>((set) => ({
 - **`interface XxxState`** 先声明 state 字段 + actions，传入 `create<XxxState>` 获得完整类型推导
 - **具名导出** `useXxxStore`（与现行代码一致；不要 `export default`）
 - **同步 action** 直接 `set({ ... })`；异步 action 在函数体内 `await` 后再 `set`
-- **共享类型**（如 `User`）从 `shared-common` import，不在 store 里重复定义
+- **共享类型**（如 `User`）从 `@zrun/core` import，不在 store 里重复定义
 - 组件内用 selector 订阅，避免整 store 重渲染：`useUserStore((s) => s.user)`
 
 ## 现行 Stores

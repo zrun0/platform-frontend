@@ -51,7 +51,7 @@ importers:
         specifier: ^5.0.15
         version: 5.0.15(@types/react@19.2.18)(react@19.2.8)
 
-  apps/main-base:
+  apps/portal:
     dependencies:
       '@types/react':
         specifier: ^19.2.18
@@ -83,6 +83,9 @@ importers:
 
   apps/uc:
     dependencies:
+      '@zrun/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -92,9 +95,6 @@ importers:
       react-router-dom:
         specifier: ^7.18.2
         version: 7.18.2(react-dom@19.2.8)(react@19.2.8)
-      shared-common:
-        specifier: workspace:*
-        version: link:../../packages/shared-common
       zustand:
         specifier: ^5.0.15
         version: 5.0.15(@types/react@19.2.18)(react@19.2.8)
@@ -115,7 +115,7 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2(@types/node@20.19.43)
 
-  packages/shared-common:
+  packages/core:
     dependencies:
       tslib:
         specifier: ^2.6.0

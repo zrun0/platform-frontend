@@ -16,7 +16,5 @@
     "composite": true
   },
   "include": ["src"],
-  "references": [
-    { "path": "../../packages/shared-common" }
-  ]
+  "references": [{ "path": "../../packages/core" }]
 }

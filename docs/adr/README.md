@@ -9,6 +9,7 @@
 - [0003 - shared-common 源码直消费](./0003-why-shared-common-source-consumption.md)
 - [0004 - Zustand 状态管理](./0004-why-zustand-for-state-management.md)
 - [0005 - wujie 微前端运行时](./0005-migrate-qiankun-to-wujie.md)（现行）
+- [0006 - 主基座更名 portal、核心包更名 @zrun/core](./0006-rename-portal-and-zrun-core.md)（现行）
 
 ## 写作规范
 

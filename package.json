@@ -6,7 +6,7 @@
     "dev": "turbo run dev",
     "dev:uc": "pnpm --filter uc dev",
     "dev:flow": "pnpm --filter flow dev",
-    "dev:base": "pnpm --filter main-base dev",
+    "dev:portal": "pnpm --filter portal dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

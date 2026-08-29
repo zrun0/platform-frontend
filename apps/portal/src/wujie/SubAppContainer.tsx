@@ -8,8 +8,8 @@ import type { SubAppConfig } from './subApps';
 // refresh / back / forward restore the sub-app route.
 export default function SubAppContainer({ app }: { app: SubAppConfig }) {
   useEffect(() => {
-    console.log(`[Main Base] SubAppContainer mounted: ${app.name}`);
-    return () => console.log(`[Main Base] SubAppContainer unmounted: ${app.name}`);
+    console.log(`[Portal] SubAppContainer mounted: ${app.name}`);
+    return () => console.log(`[Portal] SubAppContainer unmounted: ${app.name}`);
   }, [app.name]);
 
   return (

@@ -4,12 +4,12 @@
 
 ## 应用结构
 
-| 应用                     | 说明                                            | 端口 | 路由前缀 |
-| ------------------------ | ----------------------------------------------- | ---- | -------- |
-| `apps/main-base`         | wujie 主基座：子应用注册、路由导航              | 8000 | —        |
-| `apps/uc`                | UC 用户中心子应用                               | 8001 | `/uc`    |
-| `apps/flow`              | Flow 工作流管理子应用                           | 8002 | `/flow`  |
-| `packages/shared-common` | 共享类型定义 + 纯工具函数（源码直消费，无构建） | —    | —        |
+| 应用            | 说明                                                    | 端口 | 路由前缀 |
+| --------------- | ------------------------------------------------------- | ---- | -------- |
+| `apps/portal`   | wujie 主基座：子应用注册、路由导航                      | 8000 | —        |
+| `apps/uc`       | UC 用户中心子应用                                       | 8001 | `/uc`    |
+| `apps/flow`     | Flow 工作流管理子应用                                   | 8002 | `/flow`  |
+| `packages/core` | 核心共享包：类型定义 + 纯工具函数（源码直消费，无构建） | —    | —        |
 
 ## 技术栈
 
@@ -24,11 +24,11 @@
 ```bash
 pnpm install
 
-# 全量启动（main-base + uc + flow）
+# 全量启动（portal + uc + flow）
 pnpm dev
 
 # 单应用启动
-pnpm dev:base    # 或 pnpm --filter main-base dev
+pnpm dev:portal  # 或 pnpm --filter portal dev
 pnpm dev:uc      # 或 pnpm --filter uc dev
 pnpm dev:flow    # 或 pnpm --filter flow dev
 ```

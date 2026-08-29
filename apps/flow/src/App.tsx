@@ -11,7 +11,8 @@ export default function App() {
     const newStatuses = ['Active', 'Pending', 'Completed'];
     const newSteps = Math.floor(Math.random() * 10) + 1;
     const randomName = newNames[Math.floor(Math.random() * newNames.length)];
-    const randomStatus = newStatuses[Math.floor(Math.random() * newStatuses.length)];
+    const randomStatus =
+      newStatuses[Math.floor(Math.random() * newStatuses.length)];
     updateWorkflow(randomName, randomStatus, newSteps);
   };
 
@@ -21,9 +22,15 @@ export default function App() {
       <p className={styles.subtitle}>Workflow Management Sub-Application</p>
 
       <div className={styles.info}>
-        <p><strong>Workflow:</strong> {workflow.name}</p>
-        <p><strong>Status:</strong> {workflow.status}</p>
-        <p><strong>Steps:</strong> {workflow.steps}</p>
+        <p>
+          <strong>Workflow:</strong> {workflow.name}
+        </p>
+        <p>
+          <strong>Status:</strong> {workflow.status}
+        </p>
+        <p>
+          <strong>Steps:</strong> {workflow.steps}
+        </p>
       </div>
 
       <button className={styles.button} onClick={handleUpdateWorkflow}>

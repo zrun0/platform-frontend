@@ -4,14 +4,14 @@ import App from './App';
 
 let root: ReactDOM.Root | null = null;
 
-// Lifecycle hook: render the app
-export async function mount(props?: any) {
-  console.log('[Flow] Mounting with props:', props);
+function render() {
+  console.log('[Flow] Mounting');
+  if (window.__POWERED_BY_WUJIE__) {
+    console.log('[Flow] Props from main:', window.$wujie?.props);
+  }
 
-  const container = props?.container
-    ? props.container.querySelector('#root')
-    : document.querySelector('#root');
-
+  // Under wujie the document is patched to the shadowDOM container
+  const container = document.querySelector('#root');
   if (!container) {
     console.error('[Flow] Root container not found');
     return;
@@ -25,8 +25,7 @@ export async function mount(props?: any) {
   );
 }
 
-// Lifecycle hook: unmount the app
-export async function unmount(props?: any) {
+function destroy() {
   console.log('[Flow] Unmounting');
 
   if (root) {
@@ -35,12 +34,12 @@ export async function unmount(props?: any) {
   }
 }
 
-// Bootstrap for qiankun
-export async function bootstrap(props?: any) {
-  console.log('[Flow] Bootstrap with props:', props);
-}
-
-// Direct run (standalone mode)
-if (!(window as any).__POWERED_BY_QIANKUN__) {
-  mount();
+if (window.__POWERED_BY_WUJIE__) {
+  // Register lifecycles for the wujie host
+  window.__WUJIE_MOUNT = render;
+  window.__WUJIE_UNMOUNT = destroy;
+  console.log('[Flow] Running in wujie mode, waiting for lifecycle hooks');
+} else {
+  console.log('[Flow] Running in standalone mode');
+  render();
 }

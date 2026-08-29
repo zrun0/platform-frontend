@@ -13,7 +13,10 @@
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "noEmit": true,
-    "composite": true
+    "composite": true,
+    "paths": {
+      "wujie-react": ["./src/wujie/wujie-react.d.ts"]
+    }
   },
   "include": ["src"],
   "references": [

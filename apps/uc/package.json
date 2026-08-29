@@ -18,11 +18,10 @@
     "vite": "^8.2.2"
   },
   "dependencies": {
-    "shared-common": "workspace:*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
-    "vite-plugin-qiankun": "^1.0.15",
+    "shared-common": "workspace:*",
     "zustand": "^5.0.15"
   }
 }

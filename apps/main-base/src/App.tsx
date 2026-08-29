@@ -1,35 +1,20 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { registerSubApps } from './qiankun/registerApps';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { subApps } from './wujie/subApps';
+import SubAppContainer from './wujie/SubAppContainer';
 import styles from './App.module.css';
 
+function Welcome() {
+  return (
+    <div className={styles.welcome}>
+      <h1>Welcome to Platform Frontend</h1>
+      <p>Select a sub-application from the navigation above</p>
+    </div>
+  );
+}
+
 export default function App() {
-  const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Register qiankun sub-apps on mount
-    registerSubApps();
-
-    // Handle browser history changes
-    const onPopState = () => {
-      const currentPath = window.location.pathname;
-      navigate(currentPath);
-    };
-
-    window.addEventListener('popstate', onPopState);
-
-    return () => {
-      window.removeEventListener('popstate', onPopState);
-    };
-  }, [navigate]);
-
-  const handleNavigate = (path: string) => {
-    navigate(path);
-  };
-
-  // Check if current route is a sub-app route
-  const isSubAppRoute = location.pathname.startsWith('/uc') || location.pathname.startsWith('/flow');
+  const location = useLocation();
 
   return (
     <div className={styles.app}>
@@ -38,38 +23,37 @@ export default function App() {
           Platform Frontend
         </a>
         <nav className={styles.nav}>
-          <a
-            href="/uc"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavigate('/uc');
-            }}
-            className={location.pathname.startsWith('/uc') ? styles.active : ''}
-          >
-            UC
-          </a>
-          <a
-            href="/flow"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavigate('/flow');
-            }}
-            className={location.pathname.startsWith('/flow') ? styles.active : ''}
-          >
-            Flow
-          </a>
+          {subApps.map((app) => (
+            <a
+              key={app.name}
+              href={app.routePrefix}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(app.routePrefix);
+              }}
+              className={location.pathname.startsWith(app.routePrefix) ? styles.active : ''}
+            >
+              {app.label}
+            </a>
+          ))}
         </nav>
       </header>
 
       <div className={styles.content}>
-        {isSubAppRoute ? (
-          <div id="subapp-container" className={styles.subappContainer} />
-        ) : (
-          <div className={styles.welcome}>
-            <h1>Welcome to Platform Frontend</h1>
-            <p>Select a sub-application from the navigation above</p>
-          </div>
-        )}
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          {subApps.map((app) => (
+            <Route
+              key={app.name}
+              path={`${app.routePrefix}/*`}
+              element={
+                <div className={styles.subappContainer}>
+                  <SubAppContainer app={app} />
+                </div>
+              }
+            />
+          ))}
+        </Routes>
       </div>
     </div>
   );

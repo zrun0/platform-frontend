@@ -7,18 +7,20 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "echo 'Linting portal'",
+    "lint": "prettier --check --ignore-path ../../.prettierignore .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
-    "@vitejs/plugin-react": "^6.1.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
-    "typescript": "^5.9.3",
-    "vite": "^8.2.2",
     "wujie-react": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.2"
   }
 }

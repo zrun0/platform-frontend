@@ -47,11 +47,9 @@ flow:dev:        ➜  Local:   http://localhost:8002/
 2. **UC 子应用**: 点击导航 "UC"
    - URL 变为 `/uc`（开启 `sync` 后子应用路由同步到 query，如 `/uc?uc=%2F`）
    - 显示 "用户中心 / User Center Sub-Application"，用户信息（Zustand 随机数据）可交互（"Update User" 按钮）
-   - 控制台依次输出 `[UC] Running in wujie mode...`、`[UC] Mounting`、`[UC] Props from main: {...}`
 3. **Flow 子应用**: 点击导航 "Flow"
    - URL 变为 `/flow`，显示 "Hello from Flow"，"Update Workflow" 按钮可交互
-   - 控制台输出 `[Flow] Mounting`
-4. **生命周期**: 在 UC / Flow 之间多次切换，控制台交替输出 `Mounting` / `Unmounting`，无重复挂载警告
+4. **生命周期**: 在 UC / Flow 之间多次切换，页面正常挂载/卸载，控制台无报错、无重复挂载警告
 5. **样式隔离**: DevTools 检查元素 —— UC 蓝色主题 (#1890ff) 与 Flow 绿色主题 (#52c41a) 互不影响，CSS Modules 类名形如 `App_title__xyz`
 
 ---
@@ -184,7 +182,7 @@ import styles from './App.module.css';
 1. 检查子应用 `src/main.tsx` 的卸载逻辑正确销毁 React root:
 
 ```tsx
-function destroy() {
+function unmount() {
   if (root) {
     root.unmount();
     root = null;
@@ -192,15 +190,12 @@ function destroy() {
 }
 ```
 
-2. 确认双模式运行逻辑正确（wujie 模式注册钩子等待宿主调用，独立模式直接渲染）:
+2. 确认生命周期注册走 `registerWujieApp`（来自 `@zrun/core`，wujie 模式注册钩子等待宿主调用，独立模式直接渲染）:
 
 ```tsx
-if (window.__POWERED_BY_WUJIE__) {
-  window.__WUJIE_MOUNT = render;
-  window.__WUJIE_UNMOUNT = destroy;
-} else {
-  render();
-}
+import { registerWujieApp } from '@zrun/core';
+
+registerWujieApp({ mount, unmount });
 ```
 
 3. 检查控制台无 "React root" 相关警告
@@ -254,7 +249,6 @@ declare module '*.module.css' {
   entry: '//localhost:8001',
   routePrefix: '/uc',
   props: {
-    testProp: 'hello from main',
     fromPortal: true,
   },
 }
@@ -263,12 +257,8 @@ declare module '*.module.css' {
 2. 子应用通过 `window.$wujie` 读取（wujie 环境注入）:
 
 ```ts
-if (window.__POWERED_BY_WUJIE__) {
-  console.log('[UC] Props from main:', window.$wujie?.props);
-}
+const fromPortal = window.$wujie?.props?.fromPortal;
 ```
-
-3. 控制台查找 `[UC] Props from main:` 日志，确认 props 对象包含预期字段
 
 ### 问题 6: 路由不工作
 
@@ -298,6 +288,26 @@ if (window.__POWERED_BY_WUJIE__) {
 
 ---
 
+## turbo.json 任务说明
+
+> ADR-0002 Mitigation 的兑现方式：turbo.json 是纯 JSON（仓库锁定的 turbo ^1.11 不支持注释），
+> 各任务的作用与缓存策略以本节 living doc 为准（正文快照另见 ADR-0002 Implementation Notes）。
+
+| 任务 | 作用 | 缓存 | outputs | dependsOn |
+| ---- | ---- | ---- | ------- | --------- |
+| `dev` | 启动 Vite dev server（portal/uc/flow） | ❌ 不缓存（需要最新代码） | — | —；`persistent: true`（长驻任务，turbo 不等待其退出） |
+| `build` | 生产构建（`tsc` 类型检查 + `vite build`） | ✅ 按内容指纹增量缓存 | `dist/**` | `^build`（先构建依赖包；`@zrun/core` 无 build，自动跳过） |
+| `typecheck` | `tsc --noEmit` 纯类型检查 | ✅ | 无产物 | 无（core 为源码直消费，typecheck 不依赖任何 build） |
+| `lint` | `prettier --check --ignore-path ../../.prettierignore .` | ✅ | 无产物 | 无 |
+
+缓存说明：
+
+- turbo 以任务定义 + 输入文件内容生成指纹，命中则跳过执行直接回放；改代码后自动失效
+- `cache: false` 仅 `dev`；全量重跑用 `pnpm <task> --force`
+- 缓存写入 `.turbo/`（已 gitignore），如遇诡异缓存态删除该目录即可
+
+---
+
 ## 快捷命令参考
 
 ```bash
@@ -314,6 +324,10 @@ pnpm --filter uc build  # 构建单个应用
 # 类型检查
 pnpm typecheck        # 检查所有应用
 pnpm --filter uc typecheck  # 检查单个应用
+
+# 代码检查
+pnpm lint             # Prettier 格式检查（所有包）
+pnpm --filter uc lint   # 单个包
 
 # 依赖管理
 pnpm install          # 安装所有依赖

@@ -1,17 +1,12 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useUserStore } from './stores/userStore';
 import HomePage from './pages/HomePage';
 import styles from './App.module.css';
-import type { User } from '@zrun/core';
 
 // App component for UC sub-app
-interface AppProps {
-  basename?: string;
-}
-
-export default function App({ basename = '/' }: AppProps) {
-  const { user, setUser } = useUserStore();
+export default function App() {
+  const user = useUserStore((s) => s.user);
+  const setUser = useUserStore((s) => s.setUser);
 
   const handleUpdateUser = () => {
     const newNames = ['Alice', 'Bob', 'Charlie'];
@@ -22,7 +17,7 @@ export default function App({ basename = '/' }: AppProps) {
   };
 
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <div className={styles.container}>
         <h1 className={styles.title}>用户中心</h1>
         <p className={styles.subtitle}>User Center Sub-Application</p>

@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted**
+**Accepted**（「内容限制：只放类型定义 + 纯工具函数」约束已由 [0007](./0007-core-runtime-helpers-and-opt-in-deps.md) 放宽，2026-08-29；源码直消费分发策略仍现行）
 
 ## Context
 

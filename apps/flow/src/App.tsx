@@ -1,10 +1,10 @@
-import React from 'react';
 import { useWorkflowStore } from './stores/workflowStore';
 import styles from './App.module.css';
 
 // App component for Flow sub-app
 export default function App() {
-  const { workflow, updateWorkflow } = useWorkflowStore();
+  const workflow = useWorkflowStore((s) => s.workflow);
+  const updateWorkflow = useWorkflowStore((s) => s.updateWorkflow);
 
   const handleUpdateWorkflow = () => {
     const newNames = ['Workflow A', 'Workflow B', 'Workflow C'];

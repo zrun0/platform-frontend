@@ -1,20 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { registerWujieApp } from '@zrun/core';
 import App from './App';
 
 let root: ReactDOM.Root | null = null;
 
-function render() {
-  console.log('[Flow] Mounting');
-  if (window.__POWERED_BY_WUJIE__) {
-    console.log('[Flow] Props from main:', window.$wujie?.props);
-  }
-
+function mount() {
   // Under wujie the document is patched to the shadowDOM container
   const container = document.querySelector('#root');
   if (!container) {
-    console.error('[Flow] Root container not found');
-    return;
+    throw new Error('[Flow] Root container not found');
   }
 
   root = ReactDOM.createRoot(container);
@@ -25,21 +20,11 @@ function render() {
   );
 }
 
-function destroy() {
-  console.log('[Flow] Unmounting');
-
+function unmount() {
   if (root) {
     root.unmount();
     root = null;
   }
 }
 
-if (window.__POWERED_BY_WUJIE__) {
-  // Register lifecycles for the wujie host
-  window.__WUJIE_MOUNT = render;
-  window.__WUJIE_UNMOUNT = destroy;
-  console.log('[Flow] Running in wujie mode, waiting for lifecycle hooks');
-} else {
-  console.log('[Flow] Running in standalone mode');
-  render();
-}
+registerWujieApp({ mount, unmount });

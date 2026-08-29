@@ -1,2 +1,11 @@
 # Vendored agent skill files, not repo source
 .agents
+.claude
+
+# When .prettierignore exists prettier ignores .gitignore, so repeat
+# the generated-output entries here. Patterns must be anchored with **/
+# to match packages nested below the repo root.
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+**/.turbo

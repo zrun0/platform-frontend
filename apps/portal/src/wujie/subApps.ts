@@ -7,25 +7,22 @@ export interface SubAppConfig {
   props: Record<string, unknown>;
 }
 
+// Props every sub-app receives from the portal host
+const sharedProps = { fromPortal: true };
+
 export const subApps: SubAppConfig[] = [
   {
     name: 'uc',
     label: 'UC',
     entry: '//localhost:8001',
     routePrefix: '/uc',
-    props: {
-      testProp: 'hello from main',
-      fromPortal: true,
-    },
+    props: { ...sharedProps },
   },
   {
     name: 'flow',
     label: 'Flow',
     entry: '//localhost:8002',
     routePrefix: '/flow',
-    props: {
-      testProp: 'hello from main',
-      fromPortal: true,
-    },
+    props: { ...sharedProps },
   },
 ];

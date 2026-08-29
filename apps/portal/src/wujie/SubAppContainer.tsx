@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import WujieReact from 'wujie-react';
 import type { SubAppConfig } from './subApps';
 
@@ -7,11 +6,6 @@ import type { SubAppConfig } from './subApps';
 // changes are persisted to the main app url query (?name=/path) so that
 // refresh / back / forward restore the sub-app route.
 export default function SubAppContainer({ app }: { app: SubAppConfig }) {
-  useEffect(() => {
-    console.log(`[Portal] SubAppContainer mounted: ${app.name}`);
-    return () => console.log(`[Portal] SubAppContainer unmounted: ${app.name}`);
-  }, [app.name]);
-
   return (
     <WujieReact
       width="100%"

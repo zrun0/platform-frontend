@@ -28,9 +28,9 @@
 **Core (@zrun/core)**
 
 - 核心共享包（packages 底座层），不独立构建，各 app 直接消费其 TS 源码
-- 内容：当前为空壳，随业务逐步添加类型定义和工具函数
-- 依赖方向：`apps/*` 及其他 `packages/*` → `core`（`core` 不依赖任何内部包，禁止反向依赖）
-- 约束：只放类型定义和纯函数，无业务逻辑、无副作用；带副作用的（请求、存储、事件）放独立包
+- 内容：类型定义（`User`）、纯函数、无副作用的 React-free 运行时助手（`registerWujieApp`，见 ADR-0007）
+- 依赖方向：`apps/*` 及其他 `packages/*` → `core`（`core` 不依赖任何内部包，禁止反向依赖）；apps **按需引入**，用到才加 `workspace:*` 依赖
+- 约束：只放类型定义、纯函数与 React-free 运行时助手，无业务逻辑、无副作用；带副作用的（请求、存储、事件）放独立包；Node 侧配置文件（如 vite.config.ts）不 import core 源码（Node type-stripping 限制，见 ADR-0007）
 
 ### Technical Terms
 
@@ -57,10 +57,11 @@
 
 **Lifecycle (生命周期)**
 
-- 子应用在入口 `main.tsx` 中注册的两个钩子：
+- 子应用在入口 `main.tsx` 中通过 `registerWujieApp`（来自 `@zrun/core`）注册两个钩子：
   - `window.__WUJIE_MOUNT`: 挂载应用（创建 React root）
   - `window.__WUJIE_UNMOUNT`: 卸载应用（销毁 React root）
 - 双模式运行：wujie 环境（`__POWERED_BY_WUJIE__` 为 true）注册钩子等待宿主调用；独立 dev 直接渲染
+- 相关全局类型（`__POWERED_BY_WUJIE__`、`$wujie` 等）由 `@zrun/core` 的 `src/wujie.ts` 声明
 
 **`__POWERED_BY_WUJIE__` / `$wujie`**
 

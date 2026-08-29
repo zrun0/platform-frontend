@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted**（2026-08-29）
+**Accepted**（2026-08-29）(「一切包依赖它」的理由已由 [0007](./0007-core-runtime-helpers-and-opt-in-deps.md) 调整为按需引入，2026-08-29；命名决策不变)
 
 ## Context
 

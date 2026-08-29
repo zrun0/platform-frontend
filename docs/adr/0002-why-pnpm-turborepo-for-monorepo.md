@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted**
+**Accepted**（Mitigation 中「详细的 turbo.json 配置注释」「缓存策略文档」以 living doc 形式兑现于 [docs/development-workflow.md](../development-workflow.md) 的「turbo.json 任务说明」一节——turbo.json 为纯 JSON 不支持注释，2026-08-29）
 
 ## Context
 

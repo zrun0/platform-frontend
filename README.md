@@ -9,7 +9,7 @@
 | `apps/portal`   | wujie 主基座：子应用注册、路由导航                      | 8000 | —        |
 | `apps/uc`       | UC 用户中心子应用                                       | 8001 | `/uc`    |
 | `apps/flow`     | Flow 工作流管理子应用                                   | 8002 | `/flow`  |
-| `packages/core` | 核心共享包：类型定义 + 纯工具函数（源码直消费，无构建） | —    | —        |
+| `packages/core` | 核心共享包：类型定义 + 纯函数 + React-free 运行时助手（源码直消费，无构建，按需引入） | —    | —        |
 
 ## 技术栈
 
@@ -40,6 +40,7 @@ pnpm dev:flow    # 或 pnpm --filter flow dev
 ```bash
 pnpm build              # 全量构建（带 turbo 缓存）
 pnpm typecheck          # 全量类型检查
+pnpm lint               # Prettier 格式检查（per-package，经 turbo）
 pnpm --filter uc build  # 单应用构建 / typecheck 同理
 pnpm format             # Prettier 格式化
 ```

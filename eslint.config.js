@@ -1,45 +1,36 @@
 import js from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
-  // Base JS rules
+  // 1. Base JS rules
   js.configs.recommended,
 
-  // Global environment configuration
+  // 2. Global environment configuration (using globals package)
   {
     languageOptions: {
       globals: {
-        window: 'readonly',
-        document: 'readonly',
-        console: 'readonly',
-        process: 'readonly',
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
       },
     },
   },
 
-  // TypeScript configuration
+  // 3. TypeScript configuration (using typescript-eslint 8.x helper)
+  ...tseslint.configs.recommended.map(config => ({
+    ...config,
+    files: ['**/*.ts', '**/*.tsx'],
+  })),
+
   {
     files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: tsparser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
     rules: {
-      ...tseslint.configs.recommended.rules,
+      // Disable no-undef for TypeScript files (the compiler handles this)
+      'no-undef': 'off',
 
-      // TypeScript rules
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -51,18 +42,9 @@ export default [
     },
   },
 
-  // React configuration
+  // 4. React configuration
   {
     files: ['**/*.jsx', '**/*.tsx'],
-    languageOptions: {
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
     plugins: {
       react,
       'react-hooks': reactHooks,
@@ -75,26 +57,21 @@ export default [
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-
-      // React rules
-      'react/react-in-jsx-scope': 'off', // React 17+ doesn't need React import
-      'react/prop-types': 'off', // TypeScript handles prop validation
-
-      // React Hooks rules
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
 
-  // General rules for all files
+  // 5. General rules (not covered by oxlint)
   {
     rules: {
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prefer-const': 'error',
     },
   },
 
-  // Ignore patterns
+  // 6. Ignore patterns
   {
     ignores: [
       '**/node_modules/**',

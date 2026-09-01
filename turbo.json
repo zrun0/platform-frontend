@@ -1,7 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["NODE_ENV"],
-  "globalDependencies": [".env*"],
+  "globalDependencies": [
+    ".env*",
+    "eslint.config.js",
+    ".prettierrc",
+    ".prettierignore",
+    "tsconfig.base.json",
+    ".oxlintrc.json"
+  ],
   "tasks": {
     "dev": {
       "cache": false,
@@ -25,6 +32,13 @@
     },
     "lint:fix": {
       "cache": false,
+      "outputs": []
+    },
+    "lint:oxlint": {
+      "outputs": []
+    },
+    "lint:all": {
+      "dependsOn": ["^lint:oxlint", "^lint"],
       "outputs": []
     },
     "typecheck": {

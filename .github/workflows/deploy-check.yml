@@ -39,10 +39,10 @@ jobs:
 
       # 部署前的完整验证
       - name: Full build validation
-        run: pnpm turbo run build
+        run: turbo run build
 
       - name: Full test validation
-        run: pnpm turbo run test
+        run: turbo run test
 
       - name: Code quality checks
         run: |

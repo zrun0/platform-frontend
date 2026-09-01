@@ -53,19 +53,19 @@ jobs:
 
       # 6. 检查代码格式化
       - name: Check code formatting
-        run: pnpm turbo run format --affected
+        run: turbo run format --affected
 
       # 7. 运行类型检查
       - name: Type check
-        run: pnpm turbo run typecheck --affected
+        run: turbo run typecheck --affected
 
       # 8. 构建变更的包
       - name: Build affected packages
-        run: pnpm turbo run build --affected
+        run: turbo run build --affected
 
       # 9. 运行测试
       - name: Test affected packages
-        run: pnpm turbo run test --affected
+        run: turbo run test --affected
 
       # 10. 上传构建产物（可选）
       - name: Upload build artifacts
@@ -113,10 +113,10 @@ jobs:
 
       # 完整构建，验证所有包都能正常构建
       - name: Build all packages
-        run: pnpm turbo run build
+        run: turbo run build
 
       - name: Test all packages
-        run: pnpm turbo run test
+        run: turbo run test
 
       # 验证所有任务都能正常运行
       - name: Verify all tasks

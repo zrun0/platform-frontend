@@ -3,13 +3,33 @@ packages:
   - 'packages/*'
 
 catalog:
-  '@types/react': ^19.2.18
-  '@types/react-dom': ^19.2.5
-  '@vitejs/plugin-react': ^6.1.1
-  react: ^19.2.8
-  react-dom: ^19.2.8
-  react-router-dom: ^7.18.2
+  # Build tools
+  turbo: ^2.10.12
   typescript: ^5.9.3
   vite: ^8.2.2
-  wujie-react: ^2.1.0
+  '@vitejs/plugin-react': ^6.1.1
+
+  # React ecosystem
+  react: ^19.2.8
+  react-dom: ^19.2.8
+  '@types/react': ^19.2.18
+  '@types/react-dom': ^19.2.5
+  react-router-dom: ^7.18.2
+
+  # State management
   zustand: ^5.0.15
+
+  # Micro frontend
+  wujie-react: ^2.1.0
+
+  # Linting and formatting
+  eslint: ^9.18.0
+  '@eslint/js': ^9.18.0
+  '@typescript-eslint/eslint-plugin': ^8.20.0
+  '@typescript-eslint/parser': ^8.20.0
+  'eslint-plugin-react': ^7.37.2
+  'eslint-plugin-react-hooks': ^5.1.0
+  prettier: ^3.9.6
+
+  # Node types
+  '@types/node': ^20.19.43

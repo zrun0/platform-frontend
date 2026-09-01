@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --check --ignore-path ../../.prettierignore .",
+    "format:fix": "prettier --write --ignore-path ../../.prettierignore .",
     "typecheck": "tsc --noEmit",
     "test": "echo \"No tests configured yet\" && exit 0"
   },

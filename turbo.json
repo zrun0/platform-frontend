@@ -1,5 +1,5 @@
 {
-  "$schema": "https://v2-10-13-canary-1.turborepo.dev/schema.json",
+  "$schema": "https://turbo.build/schema.json",
   "globalEnv": ["NODE_ENV"],
   "globalDependencies": [".env*"],
   "tasks": {
@@ -10,10 +10,21 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", ".next/**", "out/**"],
       "env": ["VITE_*"]
     },
     "format": {
+      "outputs": []
+    },
+    "format:fix": {
+      "cache": false,
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
+      "cache": false,
       "outputs": []
     },
     "typecheck": {

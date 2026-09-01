@@ -1,0 +1,24 @@
+# Dependencies
+**/node_modules
+
+# Build outputs
+**/dist
+**/.next
+**/out
+**/build
+
+# Generated files
+**/*.generated.*
+**/*.d.ts
+
+# IDE
+.vscode
+.idea
+
+# Testing
+**/coverage
+**/.nyc_output
+
+# Misc
+.turbo
+.env*

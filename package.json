@@ -2,6 +2,7 @@
   "name": "platform-frontend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "turbo run dev",
     "dev:uc": "pnpm --filter uc dev",
@@ -9,17 +10,26 @@
     "dev:portal": "pnpm --filter portal dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
     "format": "turbo run format",
-    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:fix": "turbo run format:fix",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "fix": "pnpm lint:fix && pnpm format:fix"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
-    "prettier": "^3.9.6",
-    "turbo": "^2.10.12",
-    "typescript": "^5.9.3"
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "prettier": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:"
   },
   "packageManager": "pnpm@11.24.0",
   "engines": {

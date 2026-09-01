@@ -1,0 +1,72 @@
+name: Status Check
+
+# 定期检查项目状态
+on:
+  schedule:
+    # 每周一上午10点检查
+    - cron: '0 10 * * 1'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  health-check:
+    name: Project Health Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check project structure
+        run: |
+          echo "Checking project structure..."
+          [ -f "turbo.json" ] && echo "✅ turbo.json exists"
+          [ -f "package.json" ] && echo "✅ package.json exists"
+          [ -f "pnpm-workspace.yaml" ] && echo "✅ pnpm-workspace.yaml exists"
+
+      - name: Validate turbo configuration
+        run: |
+          echo "Validating Turborepo configuration..."
+          pnpm turbo run build --dry=json > /dev/null && echo "✅ Turbo config is valid"
+
+      - name: Check all packages
+        run: |
+          echo "Checking all packages..."
+          for pkg in apps/* packages/*; do
+            if [ -d "$pkg" ]; then
+              echo "📦 $(basename $pkg)"
+              [ -f "$pkg/package.json" ] && echo "  ✅ package.json"
+            fi
+          done
+
+      - name: Dependency security check (basic)
+        run: |
+          echo "Running basic security check..."
+          pnpm audit --audit-level moderate || echo "⚠️ Some dependencies need attention"
+
+      - name: Build all packages
+        run: |
+          echo "Testing full build..."
+          pnpm turbo run build
+
+      - name: Create status report
+        run: |
+          echo "## 📊 Project Status Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All packages build successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Turborepo configuration valid" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Project structure intact" >> $GITHUB_STEP_SUMMARY
+          echo "- 📅 Checked at: $(date)" >> $GITHUB_STEP_SUMMARY

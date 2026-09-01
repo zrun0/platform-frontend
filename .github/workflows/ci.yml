@@ -1,0 +1,127 @@
+name: CI
+
+# 触发条件：推送到主分支和所有 Pull Request
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# 取消同一 PR 的旧运行，节省资源
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 主要的构建和测试任务
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # 获取足够的历史用于 --affected 判断
+
+      # 2. 设置 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.24.0
+
+      # 3. 设置 Node.js（自动缓存 node_modules）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'  # 自动缓存 pnpm 依赖
+
+      # 4. 安装依赖（如果缓存命中会非常快）
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. 缓存 Turbo 构建产物
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      # 6. 检查代码格式化
+      - name: Check code formatting
+        run: pnpm turbo run format --affected
+
+      # 7. 运行类型检查
+      - name: Type check
+        run: pnpm turbo run typecheck --affected
+
+      # 8. 构建变更的包
+      - name: Build affected packages
+        run: pnpm turbo run build --affected
+
+      # 9. 运行测试
+      - name: Test affected packages
+        run: pnpm turbo run test --affected
+
+      # 10. 上传构建产物（可选）
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            apps/*/dist
+            packages/*/dist
+          retention-days: 7
+          if-no-files-found: ignore
+
+  # 完整构建验证（仅针对主分支）
+  full-build:
+    name: Full Build Validation
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      # 完整构建，验证所有包都能正常构建
+      - name: Build all packages
+        run: pnpm turbo run build
+
+      - name: Test all packages
+        run: pnpm turbo run test
+
+      # 验证所有任务都能正常运行
+      - name: Verify all tasks
+        run: |
+          echo "Verifying all turbo tasks..."
+          pnpm turbo run build --dry=json | jq '.tasks | length'
+          pnpm turbo run lint --dry=json | jq '.tasks | length'
+          pnpm turbo run typecheck --dry=json | jq '.tasks | length'

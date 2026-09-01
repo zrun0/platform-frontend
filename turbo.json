@@ -1,19 +1,31 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "globalEnv": ["NODE_ENV"],
+  "globalDependencies": [".env*"],
+  "tasks": {
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["VITE_*"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "out/**"]
+      "outputs": ["dist/**"],
+      "env": ["VITE_*"]
+    },
+    "format": {
+      "outputs": []
     },
     "lint": {
       "outputs": []
     },
     "typecheck": {
       "outputs": []
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
     }
   }
 }

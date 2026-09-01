@@ -9,19 +9,21 @@
     "dev:portal": "pnpm --filter portal dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
+    "format": "turbo run format",
+    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "typecheck": "turbo run typecheck",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
-    "prettier": "^3.1.0",
-    "turbo": "^1.11.0",
+    "@types/node": "^20.19.43",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.12",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@8.12.0",
+  "packageManager": "pnpm@11.24.0",
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "node": ">=20.0.0",
+    "pnpm": ">=11.24.0"
   }
 }

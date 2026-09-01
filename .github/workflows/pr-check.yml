@@ -1,0 +1,62 @@
+name: PR Checks
+
+# Fast checks designed specifically for Pull Requests
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Cancel old runs when PR updates to save resources
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Combined quick checks - only verify changed parts
+  pr-checks:
+    name: PR Checks (Affected Only)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Only need recent history
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-
+            ${{ runner.os }}-turbo-
+
+      # Quick formatting check (fastest check)
+      - name: Check formatting
+        run: pnpm turbo run format --affected
+
+      # Run linter
+      - name: Lint check
+        run: pnpm turbo run lint --affected
+
+      # Type checking
+      - name: Type check
+        run: pnpm turbo run typecheck --affected
+
+      # Build verification
+      - name: Build check
+        run: pnpm turbo run build --affected

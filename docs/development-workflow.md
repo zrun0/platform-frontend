@@ -298,7 +298,9 @@ const fromPortal = window.$wujie?.props?.fromPortal;
 | `dev` | 启动 Vite dev server（portal/uc/flow） | ❌ 不缓存（需要最新代码） | — | —；`persistent: true`（长驻任务，turbo 不等待其退出） |
 | `build` | 生产构建（`tsc` 类型检查 + `vite build`） | ✅ 按内容指纹增量缓存 | `dist/**` | `^build`（先构建依赖包；`@zrun/core` 无 build，自动跳过） |
 | `typecheck` | `tsc --noEmit` 纯类型检查 | ✅ | 无产物 | 无（core 为源码直消费，typecheck 不依赖任何 build） |
-| `lint` | `prettier --check --ignore-path ../../.prettierignore .` | ✅ | 无产物 | 无 |
+| `lint` | `eslint .`（ESLint 代码质量检查） | ✅ | 无产物 | 无 |
+| `lint:oxlint` | `oxlint`（极速代码检查，用于开发） | ✅ | 无产物 | 无 |
+| `format` | `prettier --check --ignore-path ../../.prettierignore .` | ✅ | 无产物 | 无 |
 
 缓存说明：
 
@@ -326,8 +328,14 @@ pnpm typecheck        # 检查所有应用
 pnpm --filter uc typecheck  # 检查单个应用
 
 # 代码检查
-pnpm lint             # Prettier 格式检查（所有包）
+pnpm lint             # 代码质量检查（oxlint，极速反馈）
+pnpm lint:all         # 完整检查（oxlint + ESLint，用于 CI）
 pnpm --filter uc lint   # 单个包
+
+# 代码格式化
+pnpm format           # 代码格式检查（Prettier）
+pnpm format:fix       # 代码格式化（Prettier，自动修复）
+pnpm fix              # 一键修复（lint:fix + format:fix）
 
 # 依赖管理
 pnpm install          # 安装所有依赖

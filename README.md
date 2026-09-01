@@ -17,7 +17,7 @@
 - 微前端：wujie + wujie-react（由 qiankun 迁移而来，见 [ADR-0005](docs/adr/0005-migrate-qiankun-to-wujie.md)）
 - 构建：Vite + Turborepo，包管理：pnpm workspace
 - 状态：Zustand（子应用内部）；样式：CSS Modules
-- 代码质量：Prettier only（ESLint、Husky 暂未配置）
+- 代码质量：Oxlint + ESLint + Prettier（极速开发反馈 + CI 全面检查）
 
 ## 快速开始
 
@@ -40,9 +40,10 @@ pnpm dev:flow    # 或 pnpm --filter flow dev
 ```bash
 pnpm build              # 全量构建（带 turbo 缓存）
 pnpm typecheck          # 全量类型检查
-pnpm lint               # Prettier 格式检查（per-package，经 turbo）
+pnpm lint               # 代码质量检查（oxlint，极速反馈）
 pnpm --filter uc build  # 单应用构建 / typecheck 同理
-pnpm format             # Prettier 格式化
+pnpm format             # 代码格式检查（Prettier）
+pnpm format:fix         # 代码格式化（Prettier）
 ```
 
 命令优先级：全局操作用 `pnpm <command>`（经由 turbo），单包操作用 `pnpm --filter <package> <script>`。

@@ -7,21 +7,26 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "prettier --check --ignore-path ../../.prettierignore .",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:oxlint": "oxlint",
+    "format": "prettier --check --ignore-path ../../.prettierignore .",
+    "format:fix": "prettier --write --ignore-path ../../.prettierignore .",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests configured yet\" && exit 0"
   },
   "dependencies": {
     "@zrun/core": "workspace:*",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2",
-    "zustand": "^5.0.15"
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router-dom": "catalog:",
+    "zustand": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
-    "@vitejs/plugin-react": "^6.1.1",
-    "typescript": "^5.9.3",
-    "vite": "^8.2.2"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   }
 }

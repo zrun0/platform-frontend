@@ -40,7 +40,7 @@ jobs:
       - name: Validate turbo configuration
         run: |
           echo "Validating Turborepo configuration..."
-          turbo run build --dry=json > /dev/null && echo "✅ Turbo config is valid"
+          pnpm turbo run build --dry=json > /dev/null && echo "✅ Turbo config is valid"
 
       - name: Check all packages
         run: |
@@ -60,7 +60,7 @@ jobs:
       - name: Build all packages
         run: |
           echo "Testing full build..."
-          turbo run build
+          pnpm turbo run build
 
       - name: Create status report
         run: |

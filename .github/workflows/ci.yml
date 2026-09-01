@@ -1,73 +1,78 @@
 name: CI
 
-# 触发条件：推送到主分支和所有 Pull Request
+# Trigger conditions: push to main branches and all Pull Requests
 on:
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
 
-# 取消同一 PR 的旧运行，节省资源
+# Cancel outdated runs of the same PR to save resources
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # 主要的构建和测试任务
+  # Main build and test job
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 检出代码
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # 获取足够的历史用于 --affected 判断
+          fetch-depth: 2  # Get enough history for --affected detection
 
-      # 2. 设置 pnpm
+      # 2. Setup pnpm
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 11.24.0
 
-      # 3. 设置 Node.js（自动缓存 node_modules）
+      # 3. Setup Node.js with automatic node_modules caching
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'  # 自动缓存 pnpm 依赖
+          cache: 'pnpm'
 
-      # 4. 安装依赖（如果缓存命中会非常快）
+      # 4. Install dependencies (fast if cache hits)
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 5. 缓存 Turbo 构建产物
+      # 5. Cache Turbo build outputs
       - name: Cache Turbo
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
+            ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-
             ${{ runner.os }}-turbo-
 
-      # 6. 检查代码格式化
-      - name: Check code formatting
-        run: turbo run format --affected
+      # 6. Run ESLint checks
+      - name: Lint check
+        run: pnpm turbo run lint --affected
 
-      # 7. 运行类型检查
+      # 7. Check code formatting
+      - name: Format check
+        run: pnpm turbo run format --affected
+
+      # 8. Run type checks
       - name: Type check
-        run: turbo run typecheck --affected
+        run: pnpm turbo run typecheck --affected
 
-      # 8. 构建变更的包
+      # 9. Build affected packages
       - name: Build affected packages
-        run: turbo run build --affected
+        run: pnpm turbo run build --affected
 
-      # 9. 运行测试
+      # 10. Run tests
       - name: Test affected packages
-        run: turbo run test --affected
+        run: pnpm turbo run test --affected
 
-      # 10. 上传构建产物（可选）
+      # 11. Upload build artifacts (optional)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -78,7 +83,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-  # 完整构建验证（仅针对主分支）
+  # Full build validation (main branches only)
   full-build:
     name: Full Build Validation
     runs-on: ubuntu-latest
@@ -107,21 +112,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
+            ${{ runner.os }}-turbo-${{ hashFiles('**/turbo.json') }}-
             ${{ runner.os }}-turbo-
 
-      # 完整构建，验证所有包都能正常构建
+      # Full build to verify all packages build correctly
       - name: Build all packages
-        run: turbo run build
+        run: pnpm turbo run build
 
       - name: Test all packages
-        run: turbo run test
+        run: pnpm turbo run test
 
-      # 验证所有任务都能正常运行
+      # Verify all tasks can run properly
       - name: Verify all tasks
         run: |
           echo "Verifying all turbo tasks..."
           pnpm turbo run build --dry=json | jq '.tasks | length'
           pnpm turbo run lint --dry=json | jq '.tasks | length'
+          pnpm turbo run format --dry=json | jq '.tasks | length'
           pnpm turbo run typecheck --dry=json | jq '.tasks | length'

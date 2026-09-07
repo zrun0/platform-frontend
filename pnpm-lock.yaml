@@ -119,7 +119,7 @@ importers:
 
   apps/flow:
     dependencies:
-      '@zrun/core':
+      '@lesoon/core':
         specifier: workspace:*
         version: link:../../packages/core
       react:
@@ -184,7 +184,7 @@ importers:
 
   apps/uc:
     dependencies:
-      '@zrun/core':
+      '@lesoon/core':
         specifier: workspace:*
         version: link:../../packages/core
       react:

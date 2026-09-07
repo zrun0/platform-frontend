@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted**（2026-08-29）部分调整 [0003](./0003-why-shared-common-source-consumption.md) 的内容边界约束与 [0006](./0006-rename-portal-and-zrun-core.md) 的「一切包依赖它」理由
+**Accepted**（2026-08-29）部分调整 [0003](./0003-why-shared-common-source-consumption.md) 的内容边界约束与 [0006](./0006-rename-portal-and-lesoon-core.md) 的「一切包依赖它」理由
 
 ## Context
 
@@ -26,7 +26,7 @@ Why：
 Alternatives Considered：
 
 - **保持 types-only + 接受 main.tsx 重复** ✅ 不动任何 ADR / ❌ 重复随子应用数线性增长，root 泄漏类 bug（见 CONTEXT.md Gotchas #3）要逐处防
-- **新建 `@zrun/wujie` 运行时包** ✅ core 边界不动 / ❌ 当前仅一处共享，第二底座包是过早分层；需要时再拆不迟
+- **新建 `@lesoon/wujie` 运行时包** ✅ core 边界不动 / ❌ 当前仅一处共享，第二底座包是过早分层；需要时再拆不迟
 - **tsconfig path-alias 直接引 core 源文件** ✅ 零依赖声明 / ❌ 绕过 workspace 语义，重构与类型解析都变脆
 
 ## Consequences
@@ -40,5 +40,5 @@ Mitigation：边界规则见 `packages/core/README.md` 与 `CONTEXT.md`（core �
 ## Related Decisions
 
 - [0003 - shared-common 源码直消费](./0003-why-shared-common-source-consumption.md)（分发策略不变，内容边界由本篇放宽）
-- [0006 - 主基座更名 portal、核心包更名 @zrun/core](./0006-rename-portal-and-zrun-core.md)（命名与分层不变，依赖策略改为按需）
+- [0006 - 主基座更名 portal、核心包更名 @lesoon/core](./0006-rename-portal-and-lesoon-core.md)（命名与分层不变，依赖策略改为按需）
 - [0005 - wujie 微前端运行时](./0005-migrate-qiankun-to-wujie.md)

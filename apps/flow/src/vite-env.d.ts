@@ -6,4 +6,4 @@ declare module '*.module.css' {
 }
 
 // Wujie globals (__POWERED_BY_WUJIE__, $wujie, __WUJIE_MOUNT/__WUJIE_UNMOUNT)
-// are declared by @zrun/core (src/wujie.ts) and loaded via its import.
+// are declared by @lesoon/core (src/wujie.ts) and loaded via its import.

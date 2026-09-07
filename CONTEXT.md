@@ -25,7 +25,7 @@
   - **UC (用户中心)**: `localhost:8001`, 路由前缀 `/uc`
   - **Flow (工作流管理)**: `localhost:8002`, 路由前缀 `/flow`
 
-**Core (@zrun/core)**
+**Core (@lesoon/core)**
 
 - 核心共享包（packages 底座层），不独立构建，各 app 直接消费其 TS 源码
 - 内容：类型定义（`User`）、纯函数、无副作用的 React-free 运行时助手（`registerWujieApp`，见 ADR-0007）
@@ -48,7 +48,7 @@
 **workspace:***
 
 - pnpm workspace 协议，用于 monorepo 内部包引用
-- 示例：`"@zrun/core": "workspace:*"`
+- 示例：`"@lesoon/core": "workspace:*"`
 
 **routePrefix（路由前缀）**
 
@@ -57,11 +57,11 @@
 
 **Lifecycle (生命周期)**
 
-- 子应用在入口 `main.tsx` 中通过 `registerWujieApp`（来自 `@zrun/core`）注册两个钩子：
+- 子应用在入口 `main.tsx` 中通过 `registerWujieApp`（来自 `@lesoon/core`）注册两个钩子：
   - `window.__WUJIE_MOUNT`: 挂载应用（创建 React root）
   - `window.__WUJIE_UNMOUNT`: 卸载应用（销毁 React root）
 - 双模式运行：wujie 环境（`__POWERED_BY_WUJIE__` 为 true）注册钩子等待宿主调用；独立 dev 直接渲染
-- 相关全局类型（`__POWERED_BY_WUJIE__`、`$wujie` 等）由 `@zrun/core` 的 `src/wujie.ts` 声明
+- 相关全局类型（`__POWERED_BY_WUJIE__`、`$wujie` 等）由 `@lesoon/core` 的 `src/wujie.ts` 声明
 
 **`__POWERED_BY_WUJIE__` / `$wujie`**
 

@@ -190,10 +190,10 @@ function unmount() {
 }
 ```
 
-2. 确认生命周期注册走 `registerWujieApp`（来自 `@zrun/core`，wujie 模式注册钩子等待宿主调用，独立模式直接渲染）:
+2. 确认生命周期注册走 `registerWujieApp`（来自 `@lesoon/core`，wujie 模式注册钩子等待宿主调用，独立模式直接渲染）:
 
 ```tsx
-import { registerWujieApp } from '@zrun/core';
+import { registerWujieApp } from '@lesoon/core';
 
 registerWujieApp({ mount, unmount });
 ```
@@ -296,7 +296,7 @@ const fromPortal = window.$wujie?.props?.fromPortal;
 | 任务 | 作用 | 缓存 | outputs | dependsOn |
 | ---- | ---- | ---- | ------- | --------- |
 | `dev` | 启动 Vite dev server（portal/uc/flow） | ❌ 不缓存（需要最新代码） | — | —；`persistent: true`（长驻任务，turbo 不等待其退出） |
-| `build` | 生产构建（`tsc` 类型检查 + `vite build`） | ✅ 按内容指纹增量缓存 | `dist/**` | `^build`（先构建依赖包；`@zrun/core` 无 build，自动跳过） |
+| `build` | 生产构建（`tsc` 类型检查 + `vite build`） | ✅ 按内容指纹增量缓存 | `dist/**` | `^build`（先构建依赖包；`@lesoon/core` 无 build，自动跳过） |
 | `typecheck` | `tsc --noEmit` 纯类型检查 | ✅ | 无产物 | 无（core 为源码直消费，typecheck 不依赖任何 build） |
 | `lint` | `eslint .`（ESLint 代码质量检查） | ✅ | 无产物 | 无 |
 | `lint:oxlint` | `oxlint`（极速代码检查，用于开发） | ✅ | 无产物 | 无 |

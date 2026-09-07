@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { User } from '@zrun/core';
+import type { User } from '@lesoon/core';
 
 // User store for UC sub-app
 interface UserState {

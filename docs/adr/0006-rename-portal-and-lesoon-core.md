@@ -1,4 +1,4 @@
-# 0006 - 主基座更名 portal、核心包更名 @zrun/core
+# 0006 - 主基座更名 portal、核心包更名 @lesoon/core
 
 ## Status
 
@@ -14,13 +14,13 @@
 ## Decision
 
 - 主基座目录与包名：`apps/main-base` → `apps/portal`
-- 核心共享包：`packages/shared-common` → `packages/core`，包名加公司 scope：`@zrun/core`（目录名保持 `packages/core`）
-- apps 不加 scope（永不发布，保持短名利于 `pnpm --filter`）；`packages/*` 统一 `@zrun/<name>`
+- 核心共享包：`packages/shared-common` → `packages/core`，包名加公司 scope：`@lesoon/core`（目录名保持 `packages/core`）
+- apps 不加 scope（永不发布，保持短名利于 `pnpm --filter`）；`packages/*` 统一 `@lesoon/<name>`
 
 Why：
 
 - **portal**：表达「统一门户入口」的定位，消除语义冗余，与子应用短名风格一致
-- **core + scope**：多包分层结构中 `core` 语义为「底座层（foundation layer）」（同 `@angular/core`、`@nestjs/core` 用法）：一切包依赖它、它零依赖；`@zrun/` scope 防同名冲突、为内部 registry 发布预留
+- **core + scope**：多包分层结构中 `core` 语义为「底座层（foundation layer）」（同 `@angular/core`、`@nestjs/core` 用法）：一切包依赖它、它零依赖；`@lesoon/` scope 防同名冲突、为内部 registry 发布预留
 
 Alternatives Considered：
 
@@ -32,7 +32,7 @@ Alternatives Considered：
 
 ## Consequences
 
-Positive：命名体系可扩展（`@zrun/ui`、`@zrun/request`…）；名实相符（`core` 的分层语义由 README 规则锚定）。
+Positive：命名体系可扩展（`@lesoon/ui`、`@lesoon/request`…）；名实相符（`core` 的分层语义由 README 规则锚定）。
 
 Negative：历史 ADR（0001/0003/0005）中的旧路径 `apps/main-base/`、`shared-common` 成为失效指针（append-only，正文不追改）。
 

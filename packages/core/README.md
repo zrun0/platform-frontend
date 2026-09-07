@@ -12,7 +12,7 @@ nothing.
 2. **Types, pure functions, and React-free runtime helpers only**: no
    business logic, no side effects, no React imports. Anything with side
    effects (HTTP requests, storage, events) belongs in its own package.
-3. **Opt-in dependencies**: apps add `"@zrun/core": "workspace:*"` only when
+3. **Opt-in dependencies**: apps add `"@lesoon/core": "workspace:*"` only when
    they actually use it (see ADR-0007).
 4. **Node-side config files must not import core source**: tools executed
    directly by Node (e.g. `vite.config.ts`) cannot rely on Node
@@ -25,21 +25,21 @@ Apps in the monorepo consume this package's TypeScript source directly:
 ```json
 {
   "dependencies": {
-    "@zrun/core": "workspace:*"
+    "@lesoon/core": "workspace:*"
   }
 }
 ```
 
 ```typescript
-import type { User } from '@zrun/core';
-import { registerWujieApp } from '@zrun/core';
+import type { User } from '@lesoon/core';
+import { registerWujieApp } from '@lesoon/core';
 ```
 
 ## Development
 
 ```bash
 # Type check only (no build step)
-pnpm --filter @zrun/core typecheck
+pnpm --filter @lesoon/core typecheck
 ```
 
 ## Architecture Notes

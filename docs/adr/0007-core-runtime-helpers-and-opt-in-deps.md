@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted**（2026-08-29）部分调整 [0003](./0003-why-shared-common-source-consumption.md) 的内容边界约束与 [0006](./0006-rename-portal-and-lesoon-core.md) 的「一切包依赖它」理由
+**Accepted**（2026-08-29）部分调整 [0003](./0003-why-shared-common-source-consumption.md) 的内容边界约束与 [0006](./0006-rename-portal-and-lesoon-core.md) 的「一切包依赖它」理由；Decision #3（Node 侧配置不 import core 源码）已被 [0009](./0009-shared-vite-config-factory-in-core.md) 取代（2026-09-18），其余决策不变
 
 ## Context
 

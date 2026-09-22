@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
+console.info(`[portal] version ${__APP_VERSION__}`);
+
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 // No StrictMode here: its dev-only remount (mount → unmount → remount) races

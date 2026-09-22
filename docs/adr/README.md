@@ -11,6 +11,9 @@
 - [0005 - wujie 微前端运行时](./0005-migrate-qiankun-to-wujie.md)（现行）
 - [0006 - 主基座更名 portal、核心包更名 @lesoon/core](./0006-rename-portal-and-lesoon-core.md)（现行）
 - [0007 - core 承载 React-free 运行时助手与按需引入依赖](./0007-core-runtime-helpers-and-opt-in-deps.md)（现行）
+- [0008 - Docker 部署：每应用独立镜像 + compose 编排](./0008-docker-multi-image-deployment.md)（现行）
+- [0009 - core 承载构建期 Vite 配置 factory](./0009-shared-vite-config-factory-in-core.md)（现行，取代 0007 Decision #3）
+- [0010 - 移除 GitHub Actions workflows](./0010-remove-github-actions-workflows.md)（现行）
 
 ## 写作规范
 

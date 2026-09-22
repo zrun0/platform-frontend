@@ -1,14 +1,3 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { createAppViteConfig } from '@lesoon/core/vite';
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 8000,
-    cors: true,
-  },
-  build: {
-    target: 'esnext',
-    outDir: 'dist',
-  },
-});
+export default createAppViteConfig({ port: 8000 });

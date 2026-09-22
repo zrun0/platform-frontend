@@ -28,9 +28,9 @@
 **Core (@lesoon/core)**
 
 - 核心共享包（packages 底座层），不独立构建，各 app 直接消费其 TS 源码
-- 内容：类型定义（`User`）、纯函数、无副作用的 React-free 运行时助手（`registerWujieApp`，见 ADR-0007）
+- 内容：类型定义（`User`）、纯函数、无副作用的 React-free 运行时助手（`registerWujieApp`，见 ADR-0007）、构建期 Vite 配置 factory（`./vite` subpath，见 ADR-0009）
 - 依赖方向：`apps/*` 及其他 `packages/*` → `core`（`core` 不依赖任何内部包，禁止反向依赖）；apps **按需引入**，用到才加 `workspace:*` 依赖
-- 约束：只放类型定义、纯函数与 React-free 运行时助手，无业务逻辑、无副作用；带副作用的（请求、存储、事件）放独立包；Node 侧配置文件（如 vite.config.ts）不 import core 源码（Node type-stripping 限制，见 ADR-0007）
+- 约束：运行时只放类型定义、纯函数与 React-free 运行时助手，无业务逻辑、无副作用；带副作用的（请求、存储、事件）放独立包；`./vite` subpath 仅限 `vite.config.ts` 等构建期文件 import，浏览器代码禁止引用（见 ADR-0009）
 
 ### Technical Terms
 
@@ -69,6 +69,12 @@
 - `window.$wujie`: wujie 注入的实例对象
   - `$wujie.props`: 宿主传递的数据（单向传参）
   - `$wujie.bus`: 事件总线（按约束禁用，见跨应用通信）
+
+**`__APP_CONFIG__`**
+
+- `window.__APP_CONFIG__`: portal 的运行时配置注入（portal 本地，非跨应用数据共享，不违反通信约束）
+- 来源：`<script src="/config.js">` 在应用代码前加载 —— dev 由 `apps/portal/public/config.js` 提供默认值；容器内由 nginx envsubst 从 `docker/config.js.template` 按 `SUBAPP_*_URL` 渲染（见 docs/deployment.md）
+- `subAppEntries`: 子应用 entry 映射（如 `{ uc: '//localhost:8001' }`）；`subApps.ts` 经 `resolveEntry` 读取并校验，非法/缺失直接抛错（不兜底，ADR-0008）
 
 **路由模型（wujie，与 qiankun 的关键差异）**
 
@@ -129,7 +135,7 @@
 // portal 在 src/wujie/subApps.ts 中配置 props
 {
   name: 'uc',
-  entry: '//localhost:8001',
+  entry: resolveEntry('uc'), // runtime-injected from window.__APP_CONFIG__
   routePrefix: '/uc',
   props: {
     userData: { userId: '123', userName: 'Alice' }

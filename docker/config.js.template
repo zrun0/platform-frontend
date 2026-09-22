@@ -1,0 +1,8 @@
+// Rendered at container startup by the nginx base image's envsubst-on-templates
+// mechanism (from /etc/nginx/templates); only shipped in the portal image.
+window.__APP_CONFIG__ = {
+  subAppEntries: {
+    uc: '${SUBAPP_UC_URL}',
+    flow: '${SUBAPP_FLOW_URL}',
+  },
+};

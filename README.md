@@ -17,7 +17,7 @@
 - 微前端：wujie + wujie-react（由 qiankun 迁移而来，见 [ADR-0005](docs/adr/0005-migrate-qiankun-to-wujie.md)）
 - 构建：Vite + Turborepo，包管理：pnpm workspace
 - 状态：Zustand（子应用内部）；样式：CSS Modules
-- 代码质量：Oxlint + ESLint + Prettier（极速开发反馈 + CI 全面检查）
+- 代码质量：Oxlint + ESLint + Prettier
 
 ## 快速开始
 
@@ -53,5 +53,6 @@ pnpm format:fix         # 代码格式化（Prettier）
 - [CONTEXT.md](CONTEXT.md) — 领域术语表、架构约束、Classic Gotchas
 - [docs/adr/](docs/adr/) — Architecture Decision Records（append-only）
 - [docs/development-workflow.md](docs/development-workflow.md) — 开发流程、集成验证、故障排查
+- [docs/deployment.md](docs/deployment.md) — Docker 部署、运行时配置注入（Why 见 ADR-0008）
 - [docs/state-management.md](docs/state-management.md) — Zustand 现行使用规范（Why 见 ADR-0004）
 - [AGENTS.md](AGENTS.md) — agent 协作约定与文档路由规则

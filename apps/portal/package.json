@@ -1,6 +1,5 @@
 {
   "name": "portal",
-  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,6 +21,7 @@
     "wujie-react": "catalog:"
   },
   "devDependencies": {
+    "@lesoon/core": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",

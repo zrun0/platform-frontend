@@ -1,0 +1,33 @@
+# Local full-stack run: docker compose up --build
+# Server deploy: point SUBAPP_*_URL at the public host before starting, e.g.
+#   SUBAPP_UC_URL=//demo.example.com:8001 SUBAPP_FLOW_URL=//demo.example.com:8002 docker compose up -d
+# Entries are protocol-relative to stay http/https neutral.
+# Defaults mirror apps/portal/public/config.js (local dev); keep in sync.
+services:
+  portal:
+    # Tag with the release version: TAG=$(jq -r .version package.json)
+    image: platform-portal:${TAG:-local}
+    build:
+      context: .
+      target: portal
+    ports:
+      - '8000:80'
+    environment:
+      SUBAPP_UC_URL: ${SUBAPP_UC_URL:-//localhost:8001}
+      SUBAPP_FLOW_URL: ${SUBAPP_FLOW_URL:-//localhost:8002}
+
+  uc:
+    image: platform-uc:${TAG:-local}
+    build:
+      context: .
+      target: uc
+    ports:
+      - '8001:80'
+
+  flow:
+    image: platform-flow:${TAG:-local}
+    build:
+      context: .
+      target: flow
+    ports:
+      - '8002:80'

@@ -246,7 +246,7 @@ declare module '*.module.css' {
 ```ts
 {
   name: 'uc',
-  entry: '//localhost:8001',
+  entry: resolveEntry('uc'), // runtime-injected from window.__APP_CONFIG__
   routePrefix: '/uc',
   props: {
     fromPortal: true,
@@ -329,7 +329,7 @@ pnpm --filter uc typecheck  # 检查单个应用
 
 # 代码检查
 pnpm lint             # 代码质量检查（oxlint，极速反馈）
-pnpm lint:all         # 完整检查（oxlint + ESLint，用于 CI）
+pnpm lint:all         # 完整检查（oxlint + ESLint）
 pnpm --filter uc lint   # 单个包
 
 # 代码格式化

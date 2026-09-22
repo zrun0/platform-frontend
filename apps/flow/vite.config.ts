@@ -1,17 +1,3 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { createAppViteConfig } from '@lesoon/core/vite';
 
-// Sub-app dev server block kept byte-identical with apps/uc: wujie
-// fetches sub-app resources from the host origin, CORS is required.
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 8002,
-    cors: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
-  },
-});
+export default createAppViteConfig({ port: 8002, subApp: true });

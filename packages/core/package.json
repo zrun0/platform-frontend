@@ -1,5 +1,5 @@
 {
-  "name": "@lesoon/core",
+  "name": "@novon/core",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",

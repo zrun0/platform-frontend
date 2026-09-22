@@ -1,3 +1,3 @@
-import { createAppViteConfig } from '@lesoon/core/vite';
+import { createAppViteConfig } from '@novon/core/vite';
 
 export default createAppViteConfig({ port: 8000 });

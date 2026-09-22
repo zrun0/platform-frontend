@@ -1,4 +1,4 @@
-# 0009 - core 承载构建期 Vite 配置 factory（`@lesoon/core/vite`）
+# 0009 - core 承载构建期 Vite 配置 factory（`@novon/core/vite`）
 
 ## Status
 
@@ -30,7 +30,7 @@ Alternatives Considered：
 
 - **维持 0007 #3，三份内联** ✅ 边界不动 / ❌ version 注入等横切配置逐处改，字节一致靠纪律
 - **根目录共享文件相对路径 import**（`../../vite.config.shared.ts`）✅ 不动 core / ❌ 绕过 workspace 语义与 package exports，类型解析脆
-- **新建 `@lesoon/vite-config` 包** ✅ core 边界零争议 / ❌ 单一 factory 独立成包是过早分层，需要时再拆
+- **新建 `@novon/vite-config` 包** ✅ core 边界零争议 / ❌ 单一 factory 独立成包是过早分层，需要时再拆
 
 ## Consequences
 

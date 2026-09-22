@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { User } from '@lesoon/core';
+import type { User } from '@novon/core';
 
 // User store for UC sub-app
 interface UserState {

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { registerWujieApp } from '@lesoon/core';
+import { registerWujieApp } from '@novon/core';
 import App from './App';
 
 let root: ReactDOM.Root | null = null;

@@ -3,7 +3,7 @@
 Foundation layer of the platform frontend monorepo: shared type definitions,
 pure utility functions, side-effect-free React-free runtime helpers
 (e.g. `registerWujieApp`), and a build-time Vite config factory
-(`@lesoon/core/vite`, e.g. `createAppViteConfig`). Everything else builds on
+(`@novon/core/vite`, e.g. `createAppViteConfig`). Everything else builds on
 it; it builds on nothing.
 
 ## Rules
@@ -14,7 +14,7 @@ it; it builds on nothing.
    only**: no business logic, no side effects, no React imports. Anything
    with side effects (HTTP requests, storage, events) belongs in its own
    package.
-3. **Opt-in dependencies**: apps add `"@lesoon/core": "workspace:*"` only when
+3. **Opt-in dependencies**: apps add `"@novon/core": "workspace:*"` only when
    they actually use it (see ADR-0007).
 4. **The `./vite` subpath is build-time only**: `src/vite.ts` exists for
    `vite.config.ts` files (Vite loads configs via esbuild bundling, not Node
@@ -28,27 +28,27 @@ Apps in the monorepo consume this package's TypeScript source directly:
 ```json
 {
   "dependencies": {
-    "@lesoon/core": "workspace:*"
+    "@novon/core": "workspace:*"
   }
 }
 ```
 
 ```typescript
-import type { User } from '@lesoon/core';
-import { registerWujieApp } from '@lesoon/core';
+import type { User } from '@novon/core';
+import { registerWujieApp } from '@novon/core';
 ```
 
 Vite configs import the dedicated subpath:
 
 ```typescript
-import { createAppViteConfig } from '@lesoon/core/vite';
+import { createAppViteConfig } from '@novon/core/vite';
 ```
 
 ## Development
 
 ```bash
 # Type check only (no build step)
-pnpm --filter @lesoon/core typecheck
+pnpm --filter @novon/core typecheck
 ```
 
 ## Architecture Notes

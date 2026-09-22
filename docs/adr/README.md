@@ -9,7 +9,7 @@
 - [0003 - shared-common 源码直消费](./0003-why-shared-common-source-consumption.md)
 - [0004 - Zustand 状态管理](./0004-why-zustand-for-state-management.md)
 - [0005 - wujie 微前端运行时](./0005-migrate-qiankun-to-wujie.md)（现行）
-- [0006 - 主基座更名 portal、核心包更名 @lesoon/core](./0006-rename-portal-and-lesoon-core.md)（现行）
+- [0006 - 主基座更名 portal、核心包更名 @novon/core](./0006-rename-portal-and-novon-core.md)（现行）
 - [0007 - core 承载 React-free 运行时助手与按需引入依赖](./0007-core-runtime-helpers-and-opt-in-deps.md)（现行）
 - [0008 - Docker 部署：每应用独立镜像 + compose 编排](./0008-docker-multi-image-deployment.md)（现行）
 - [0009 - core 承载构建期 Vite 配置 factory](./0009-shared-vite-config-factory-in-core.md)（现行，取代 0007 Decision #3）

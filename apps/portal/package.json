@@ -21,7 +21,7 @@
     "wujie-react": "catalog:"
   },
   "devDependencies": {
-    "@lesoon/core": "workspace:*",
+    "@novon/core": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
